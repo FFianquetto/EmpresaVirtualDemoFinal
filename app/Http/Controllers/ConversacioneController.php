@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Conversacione;
+use App\Models\Conversaciones;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ConversacioneRequest;
@@ -16,7 +16,7 @@ class ConversacioneController extends Controller
      */
     public function index(Request $request): View
     {
-        $conversaciones = Conversacione::paginate();
+        $conversaciones = Conversaciones::paginate();
 
         return view('conversacione.index', compact('conversaciones'))
             ->with('i', ($request->input('page', 1) - 1) * $conversaciones->perPage());
@@ -27,7 +27,7 @@ class ConversacioneController extends Controller
      */
     public function create(): View
     {
-        $conversacione = new Conversacione();
+        $conversacione = new Conversaciones();
 
         return view('conversacione.create', compact('conversacione'));
     }
@@ -37,7 +37,7 @@ class ConversacioneController extends Controller
      */
     public function store(ConversacioneRequest $request): RedirectResponse
     {
-        Conversacione::create($request->validated());
+        Conversaciones::create($request->validated());
 
         return Redirect::route('conversaciones.index')
             ->with('success', 'Conversacione created successfully.');
@@ -48,7 +48,7 @@ class ConversacioneController extends Controller
      */
     public function show($id): View
     {
-        $conversacione = Conversacione::find($id);
+        $conversacione = Conversaciones::find($id);
 
         return view('conversacione.show', compact('conversacione'));
     }
@@ -58,7 +58,7 @@ class ConversacioneController extends Controller
      */
     public function edit($id): View
     {
-        $conversacione = Conversacione::find($id);
+        $conversacione = Conversaciones::find($id);
 
         return view('conversacione.edit', compact('conversacione'));
     }
@@ -66,7 +66,7 @@ class ConversacioneController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ConversacioneRequest $request, Conversacione $conversacione): RedirectResponse
+    public function update(ConversacioneRequest $request, Conversaciones $conversacione): RedirectResponse
     {
         $conversacione->update($request->validated());
 
@@ -76,7 +76,7 @@ class ConversacioneController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        Conversacione::find($id)->delete();
+        Conversaciones::find($id)->delete();
 
         return Redirect::route('conversaciones.index')
             ->with('success', 'Conversacione deleted successfully');

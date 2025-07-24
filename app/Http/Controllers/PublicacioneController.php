@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Publicacione;
+use App\Models\Publicaciones; 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\PublicacioneRequest;
@@ -16,7 +16,7 @@ class PublicacioneController extends Controller
      */
     public function index(Request $request): View
     {
-        $publicaciones = Publicacione::paginate();
+        $publicaciones = Publicaciones::paginate();
 
         return view('publicacione.index', compact('publicaciones'))
             ->with('i', ($request->input('page', 1) - 1) * $publicaciones->perPage());
@@ -27,9 +27,9 @@ class PublicacioneController extends Controller
      */
     public function create(): View
     {
-        $publicacione = new Publicacione();
+        $publicacione = new Publicaciones();
 
-        return view('publicacione.create', compact('publicacione'));
+        return view('Publicaciones.create', compact('publicacione'));
     }
 
     /**
@@ -37,7 +37,7 @@ class PublicacioneController extends Controller
      */
     public function store(PublicacioneRequest $request): RedirectResponse
     {
-        Publicacione::create($request->validated());
+        Publicaciones::create($request->validated());
 
         return Redirect::route('publicaciones.index')
             ->with('success', 'Publicacione created successfully.');
@@ -48,7 +48,7 @@ class PublicacioneController extends Controller
      */
     public function show($id): View
     {
-        $publicacione = Publicacione::find($id);
+        $publicacione = Publicaciones::find($id);
 
         return view('publicacione.show', compact('publicacione'));
     }
@@ -58,7 +58,7 @@ class PublicacioneController extends Controller
      */
     public function edit($id): View
     {
-        $publicacione = Publicacione::find($id);
+        $publicacione = Publicaciones::find($id);
 
         return view('publicacione.edit', compact('publicacione'));
     }
@@ -66,7 +66,7 @@ class PublicacioneController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PublicacioneRequest $request, Publicacione $publicacione): RedirectResponse
+    public function update(PublicacioneRequest $request, Publicaciones $publicacione): RedirectResponse
     {
         $publicacione->update($request->validated());
 
@@ -76,7 +76,7 @@ class PublicacioneController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        Publicacione::find($id)->delete();
+        Publicaciones::find($id)->delete();
 
         return Redirect::route('publicaciones.index')
             ->with('success', 'Publicacione deleted successfully');

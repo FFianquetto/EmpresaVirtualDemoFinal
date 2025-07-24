@@ -11,6 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        // Tabla 'registro' (usuarios)
+        Schema::create('registro', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->string('correo')->unique();
+            $table->string('contrasena');
+            $table->integer('edad');
+            $table->timestamps();
+        });
+
+        // Tabla 'conversaciones'
+        Schema::create('conversaciones', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('registro_id_emisor')->constrained('registro')->onDelete('cascade');
+            $table->foreignId('registro_id_receptor')->constrained('registro')->onDelete('cascade');
+            $table->text('mensaje');
+            $table->timestamp('enviado_en')->useCurrent();
+        });
+
+        // Tabla 'publicaciones'
         Schema::create('publicaciones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('registro_id')->constrained('registro')->onDelete('cascade');
@@ -33,5 +54,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('publicaciones');
+        Schema::dropIfExists('conversaciones');
+        Schema::dropIfExists('registro');
     }
 };
